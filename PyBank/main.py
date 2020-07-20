@@ -1,60 +1,47 @@
 import os
 import csv
 
-
 csvpath = os.path.join("Resources", "budget_data.csv")
 
-found = False
-
+#Look at the data
 with open(csvpath) as f:
     reader = csv.reader(f, delimiter=':')
+    fieldnames = ["Date", "Profit/Losses"]
     for row in reader:
-        print row
-
+        print (row)
+   
 #The net total amount of "Profit/Losses" over the entire period
 with open(csvpath) as csvfile:
     csvreader = csv.reader(csvfile, delimiter=",")
 
     num_rows = 0
-    for row in open(cvspath):
+    for row in open(csvpath):
         num_rows += 1
 
     print(num_rows)
 
-#with open("csvpath")) as fin:
- # headerline = fin.next()
-  #total = 0
-  #for row in csv.reader(fin):
-   # print col # for troubleshooting
-    #for col in row[1]:
-     # total += int(col)
-  #print total
+# The greatest decrease in losses (date and amount) over the entire period
+with open(csvpath) as csvfile:
+    Date_array =[]
+    Value_array = list()
+    next(csvfile)
+    for line in csvfile:
+            array = line.split(',')
+            first_item = array[0]
+            second_item = array[1].rstrip("\n")
+            Date_array.append(first_item )
+            Value_array.append (int(second_item))
+            
+    total_profit = sum(Value_array)
+    loser = min(Value_array)
+    winner = max(Value_array)
 
-#for row in csvpath:
- #       header = next(csvpath)
-  #      if row[0] == Emmp ID:
-   #         print("For" + row[0] + "  " + row[1])
+    Avg_Budget = (sum(Value_array)/len(Value_array))
+  
+   # printing the first element 
+    print(Value_array)
 
-    #        found = True
-
-
-    #if found is False:
-     #   print("Sorry about this, we don't seem to have what you are looking for!")
-
-
-avg_mass = sum(csvpath) / len(csvpath)
-print "avg of mass: ", avg_mass
-
-#The greatest increase in profits (date and amount) over the entire period
-with open('american_colleges__universities_1993.csv', 'rU') as f:
-    reader = csv.reader(f)
-    answer = 0
-    for column in reader :
-        answer = 0
-        for i in column[14]:
-            if i>answer:
-                answer = i
-print answer
-
-
-
+    print("The average of the changes in Profit/Losses over the entire period", Avg_Budget)
+    print("total of the profit and loss:", total_profit)
+    print("Smallest element is:", loser)
+    print("Biggest element is:", winner)
